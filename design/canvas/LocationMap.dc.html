@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>동네 범위</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 0 4px;">
+    <a href="LocationSetup.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 18px;">동네 범위 설정</h1>
+    <span style="margin-left: auto; margin-right: 12px; font-size: 12px; color: #5A6472;">3 / 3단계</span>
+  </header>
+
+  <div style="flex-grow: 1; min-height: 0; background: #E9EEF0; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <span style="position: absolute; left: 0; right: 0; top: 90px; height: 12px; background: #F7F8F9;"></span>
+    <span style="position: absolute; left: 0; right: 0; top: 250px; height: 9px; background: #F7F8F9;"></span>
+    <span style="position: absolute; top: 0; bottom: 0; left: 96px; width: 10px; background: #F7F8F9;"></span>
+    <span style="position: absolute; top: 0; bottom: 0; left: 280px; width: 14px; background: #F7F8F9;"></span>
+    <span style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: #CFE1EA;"></span>
+    <span style="position: absolute; left: 14px; bottom: 26px; font-size: 11px; color: #3D5A6C;">한강</span>
+    <span style="position: absolute; width: 300px; height: 300px; border-radius: 150px; background: rgba(194,65,12,0.10); border: 2px solid #C2410C;"></span>
+    <span style="position: absolute; width: 96px; height: 96px; border-radius: 48px; border: 1.5px dashed #C2410C;"></span>
+    <span style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <span style="padding: 4px 10px; border-radius: 14px; background: #18202C; color: #FFFFFF; font-size: 12px; font-weight: 700;">망원동</span>
+      <span style="width: 14px; height: 14px; border-radius: 7px; background: #C2410C; border: 3px solid #FFFFFF;"></span>
+    </span>
+    <span style="position: absolute; left: 44px; top: 140px; font-size: 12px; color: #18202C;">합정동</span>
+    <span style="position: absolute; right: 36px; top: 130px; font-size: 12px; color: #18202C;">성산동</span>
+    <span style="position: absolute; left: 150px; top: 46px; font-size: 12px; color: #18202C;">서교동</span>
+    <span style="position: absolute; left: 10px; top: 10px; font-size: 11px; color: #5A6472;">[지도 · 네이버 지도 SDK]</span>
+  </div>
+
+  <section style="flex-shrink: 0; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #E3E6EA;">
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <h2 style="margin: 0; font-size: 17px; font-weight: 700;">망원동 근처 동네 <span style="color: #C2410C; font-variant-numeric: tabular-nums;">12곳</span></h2>
+      <p style="margin: 0; font-size: 13px; color: #5A6472;">선택한 범위 안의 이웃에게 내 물건과 글이 보여요</p>
+    </div>
+    <fieldset style="margin: 0; padding: 0; border: 0;">
+      <legend style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">동네 범위</legend>
+      <div style="position: relative; height: 4px; margin: 10px 12px 0; background: #E3E6EA; border-radius: 2px;">
+        <span style="position: absolute; left: 0; width: 33.3%; height: 4px; border-radius: 2px; background: #C2410C;"></span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: -14px;">
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; color: #5A6472; min-height: 44px;"><input type="radio" name="range" style="width: 20px; height: 20px; margin: 0; accent-color: #C2410C;">500m</label>
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; color: #18202C; font-weight: 700; min-height: 44px;"><input type="radio" name="range" checked style="width: 20px; height: 20px; margin: 0; accent-color: #C2410C;">2km</label>
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; color: #5A6472; min-height: 44px;"><input type="radio" name="range" style="width: 20px; height: 20px; margin: 0; accent-color: #C2410C;">6km</label>
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; color: #5A6472; min-height: 44px;"><input type="radio" name="range" style="width: 20px; height: 20px; margin: 0; accent-color: #C2410C;">10km</label>
+      </div>
+    </fieldset>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #F4F5F7;">망원동</span>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #F4F5F7;">합정동</span>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #F4F5F7;">성산동</span>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #F4F5F7;">서교동</span>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #F4F5F7;">연남동</span>
+      <span style="font-size: 12px; padding: 4px 10px; color: #5A6472;">외 7곳</span>
+    </div>
+    <a href="Home.dc.html" style="display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 8px; background: #C2410C; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none;">이 범위로 시작하기</a>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>판매자 프로필</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 4px;">
+    <a href="ProductDetail.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    <button type="button" aria-label="더보기 · 차단·신고" style="width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+    </button>
+  </header>
+
+  <section style="padding: 0 16px 18px; display: flex; flex-direction: column; gap: 16px; flex-shrink: 0;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span style="width: 64px; height: 64px; border-radius: 32px; background: #D9DEE5; flex-shrink: 0;"></span>
+      <span style="display: flex; flex-direction: column; gap: 2px;">
+        <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 20px;">합정동고양이</h1>
+        <span style="font-size: 13px; color: #5A6472;">합정동 · 동네 인증 2025.11</span>
+      </span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #E3E6EA; border-radius: 12px;">
+      <span style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 12px; color: #5A6472;">매너온도</span>
+        <span style="font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 26px; color: #0F766E; font-variant-numeric: tabular-nums;">37.2℃</span>
+      </span>
+      <span style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px;">
+        <span style="position: relative; height: 8px; border-radius: 4px; background: #E3E6EA;" role="img" aria-label="매너온도 37.2도, 99도 만점"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 37.6%; border-radius: 4px; background: #0F766E;"></span></span>
+        <span style="font-size: 12px; color: #5A6472;">받은 후기 12개 중 좋아요 11개</span>
+      </span>
+    </div>
+  </section>
+
+  <div role="tablist" aria-label="프로필 탭" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #E3E6EA;">
+    <button type="button" role="tab" aria-selected="true" style="height: 48px; border: 0; border-bottom: 2px solid #18202C; background: transparent; font-family: inherit; font-size: 14px; font-weight: 700; color: #18202C; font-variant-numeric: tabular-nums;">판매 물품 7</button>
+    <button type="button" role="tab" aria-selected="false" style="height: 48px; border: 0; border-bottom: 2px solid transparent; background: transparent; font-family: inherit; font-size: 14px; color: #5A6472; font-variant-numeric: tabular-nums;">받은 후기 12</button>
+  </div>
+
+  <main style="flex-grow: 1; min-height: 0; overflow: hidden; padding: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; align-content: start;">
+    <sc-for list="{{items}}" as="item" hint-placeholder-count="4">
+      <a href="ProductDetail.dc.html" style="display: flex; flex-direction: column; gap: 6px; color: #18202C; text-decoration: none;">
+        <span style="aspect-ratio: 1; border-radius: 8px; background: #EEF0F3; display: flex; align-items: center; justify-content: center; color: #5A6472; font-size: 11px;">[상품 사진]</span>
+        <span style="font-size: 14px; font-weight: 500; line-height: 1.4;">{{item.title}}</span>
+        <span style="display: flex; align-items: center; gap: 6px;">
+          <sc-if value="{{item.reserved}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: #DBEAFE; color: #1D4ED8;">예약중</span></sc-if>
+          <span style="font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;">{{item.price}}</span>
+        </span>
+      </a>
+    </sc-for>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+items: [
+{ title: '이케아 포엥 암체어', price: '35,000원', reserved: true },
+{ title: '스탠드 조명 (전구 포함)', price: '15,000원', reserved: false },
+{ title: '고양이 캣타워 중형', price: '28,000원', reserved: false },
+{ title: '전자레인지 20L', price: '40,000원', reserved: false }
+]
+};
+}
+}
+</script>
+</body>
+</html>

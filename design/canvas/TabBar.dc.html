@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>하단 탭</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<nav aria-label="하단 탭" style="width: 390px; height: 84px; box-sizing: border-box; display: flex; align-items: flex-start; justify-content: space-around; padding: 6px 8px 0; background: #FFFFFF; border-top: 1px solid #E3E6EA; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; color: #18202C;">
+  <a href="Home.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 66px; min-height: 52px; text-decoration: none; font-size: 11px; color: {{cHome}}; font-weight: {{wHome}};">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span>홈</span>
+  </a>
+  <a href="Community.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 66px; min-height: 52px; text-decoration: none; font-size: 11px; color: {{cCom}}; font-weight: {{wCom}};">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <span>동네생활</span>
+  </a>
+  <a href="PhotoUpload.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 66px; min-height: 52px; text-decoration: none; font-size: 11px; color: #18202C; font-weight: 500;">
+    <span style="width: 32px; height: 32px; border-radius: 16px; background: #C2410C; color: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </span>
+    <span>글쓰기</span>
+  </a>
+  <a href="ChatList.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 66px; min-height: 52px; text-decoration: none; font-size: 11px; color: {{cChat}}; font-weight: {{wChat}}; position: relative;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <span>채팅</span>
+    <span style="position: absolute; top: 2px; right: 12px; min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 9px; background: #C2410C; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;">3</span>
+  </a>
+  <a href="My.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 66px; min-height: 52px; text-decoration: none; font-size: 11px; color: {{cMy}}; font-weight: {{wMy}};">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <span>나의 마켓</span>
+  </a>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","community","chat","my"],"default":"home"},"$preview":{"width":390,"height":84}}'>
+class Component extends DCLogic {
+renderVals() {
+const a = this.props.active ?? 'home';
+const c = (k) => (a === k ? '#C2410C' : '#5A6472');
+const w = (k) => (a === k ? '700' : '500');
+return {
+cHome: c('home'), wHome: w('home'),
+cCom: c('community'), wCom: w('community'),
+cChat: c('chat'), wChat: w('chat'),
+cMy: c('my'), wMy: w('my')
+};
+}
+}
+</script>
+</body>
+</html>

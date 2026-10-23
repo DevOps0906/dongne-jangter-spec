@@ -1,0 +1,56 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-23T10:10:00Z"},
+  "title": "중고거래마켓 앱 디자인",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 900, "title": "디자인 기준 · 앱 셸 A"},
+    "TabBar.dc.html": {"x": 1520, "y": 0, "w": 390, "h": 84, "title": "TabBar · 하단 5탭 (A)", "is_interactive": true},
+
+    "Login.dc.html": {"x": 0, "y": 1280, "w": 390, "h": 844, "title": "로그인·인증 · I · V-E + V-K", "is_interactive": true},
+    "LocationSetup.dc.html": {"x": 470, "y": 1280, "w": 390, "h": 844, "title": "동네 설정·인증 · I + 고유 · V-E", "is_interactive": true},
+    "LocationMap.dc.html": {"x": 940, "y": 1280, "w": 390, "h": 844, "title": "동네 지도 · 고유 · V-E", "is_interactive": true},
+
+    "Home.dc.html": {"x": 0, "y": 2504, "w": 390, "h": 844, "title": "홈 피드 · B + G페이지 · V-E", "is_interactive": true},
+    "Search.dc.html": {"x": 470, "y": 2504, "w": 390, "h": 844, "title": "검색 · B · V-E", "is_interactive": true},
+    "ProductDetail.dc.html": {"x": 940, "y": 2504, "w": 390, "h": 844, "title": "상품 상세 · G페이지 · V-E + V-M", "is_interactive": true},
+    "PriceOffer.dc.html": {"x": 1410, "y": 2504, "w": 390, "h": 844, "title": "가격 제안 시트 · V-K", "is_interactive": true},
+
+    "Community.dc.html": {"x": 0, "y": 3728, "w": 390, "h": 844, "title": "동네생활 피드 · B + G페이지 · V-E", "is_interactive": true},
+    "PostDetail.dc.html": {"x": 470, "y": 3728, "w": 390, "h": 844, "title": "게시글 상세 · G페이지 · V-E", "is_interactive": true},
+    "PostWrite.dc.html": {"x": 940, "y": 3728, "w": 390, "h": 844, "title": "동네생활 글쓰기 · I · V-E", "is_interactive": true},
+
+    "PhotoUpload.dc.html": {"x": 0, "y": 4952, "w": 390, "h": 844, "title": "이미지 업로드 · M + N · 1/3단계", "is_interactive": true},
+    "ProductWrite.dc.html": {"x": 470, "y": 4952, "w": 390, "h": 844, "title": "상품 등록·수정 · I · 2/3단계", "is_interactive": true},
+
+    "ChatList.dc.html": {"x": 0, "y": 6176, "w": 390, "h": 844, "title": "채팅 목록 · F · V-E", "is_interactive": true},
+    "ChatRoom.dc.html": {"x": 470, "y": 6176, "w": 390, "h": 844, "title": "채팅방 · F 본문 · V-E", "is_interactive": true},
+
+    "My.dc.html": {"x": 0, "y": 7400, "w": 390, "h": 844, "title": "나의 중고거래마켓 · H + G · V-F", "is_interactive": true},
+    "Sales.dc.html": {"x": 470, "y": 7400, "w": 390, "h": 844, "title": "판매·구매 내역 · B + G · V-E", "is_interactive": true},
+    "Likes.dc.html": {"x": 940, "y": 7400, "w": 390, "h": 844, "title": "관심 목록 · B · V-E", "is_interactive": true},
+    "SellerProfile.dc.html": {"x": 1410, "y": 7400, "w": 390, "h": 844, "title": "판매자 프로필 · G페이지 · V-F", "is_interactive": true},
+    "MannerReview.dc.html": {"x": 1880, "y": 7400, "w": 390, "h": 844, "title": "매너 평가 · I · V-E", "is_interactive": true},
+    "Settings.dc.html": {"x": 2350, "y": 7400, "w": 390, "h": 844, "title": "설정 · H · V-E", "is_interactive": true}
+  },
+  "order": [
+    "Main.dc.html", "TabBar.dc.html",
+    "Login.dc.html", "LocationSetup.dc.html", "LocationMap.dc.html",
+    "Home.dc.html", "Search.dc.html", "ProductDetail.dc.html", "PriceOffer.dc.html",
+    "Community.dc.html", "PostDetail.dc.html", "PostWrite.dc.html",
+    "PhotoUpload.dc.html", "ProductWrite.dc.html",
+    "ChatList.dc.html", "ChatRoom.dc.html",
+    "My.dc.html", "Sales.dc.html", "Likes.dc.html", "SellerProfile.dc.html", "MannerReview.dc.html", "Settings.dc.html"
+  ],
+  "notes": {
+    "rowBase": {"x": 0, "y": -260, "text": "디자인 기준 · 앱 셸", "kind": "title1", "maxW": 1910},
+    "rowEntry": {"x": 0, "y": 1020, "text": "앱 진입 (탭 밖)", "kind": "title1", "maxW": 1330},
+    "rowHome": {"x": 0, "y": 2244, "text": "TAB 0 · 홈", "kind": "title1", "maxW": 1800},
+    "rowCommunity": {"x": 0, "y": 3468, "text": "TAB 1 · 동네생활", "kind": "title1", "maxW": 1330},
+    "rowWrite": {"x": 0, "y": 4692, "text": "TAB 2 · 글쓰기", "kind": "title1", "maxW": 860},
+    "rowChat": {"x": 0, "y": 5916, "text": "TAB 3 · 채팅", "kind": "title1", "maxW": 860},
+    "rowMy": {"x": 0, "y": 7140, "text": "TAB 4 · 나의 중고거래마켓", "kind": "title1", "maxW": 2740}
+  },
+  "designSystems": []
+}

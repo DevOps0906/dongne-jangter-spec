@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>게시글 상세</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 4px;">
+    <a href="Community.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    <button type="button" aria-label="더보기 · 신고·공유" style="width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+    </button>
+  </header>
+
+  <main style="flex-grow: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;">
+    <article style="padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F4F5F7;">
+      <span style="align-self: flex-start; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #F1F3F5; color: #4B5563;">동네질문</span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="width: 36px; height: 36px; border-radius: 18px; background: #D9DEE5;"></span>
+        <span style="display: flex; flex-direction: column;">
+          <span style="font-size: 14px; font-weight: 600;">망원동산책러</span>
+          <span style="font-size: 12px; color: #5A6472;">망원동 · 20분 전 · 조회 87</span>
+        </span>
+      </div>
+      <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 20px; line-height: 1.4;">망원동 근처 일요일에 여는 동물병원 있을까요?</h1>
+      <p style="margin: 0; font-size: 15px; line-height: 1.7;">강아지가 어제부터 사료를 잘 안 먹어서요. 평일엔 다니던 곳이 있는데 일요일은 휴진이라고 해서요. 일요일 오후에 진료하는 곳 아시면 알려주세요.</p>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" aria-pressed="true" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #18202C; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600; color: #18202C; font-variant-numeric: tabular-nums;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          공감 4
+        </button>
+      </div>
+    </article>
+
+    <section aria-labelledby="cmtTitle" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+      <h2 id="cmtTitle" style="margin: 0; font-size: 14px; font-weight: 700;">댓글 <span style="font-variant-numeric: tabular-nums;">6</span></h2>
+      <sc-for list="{{comments}}" as="c" hint-placeholder-count="3">
+        <div style="display: flex; gap: 10px;">
+          <span style="width: 32px; height: 32px; border-radius: 16px; background: #D9DEE5; flex-shrink: 0;"></span>
+          <span style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+            <span style="font-size: 13px;"><b style="font-weight: 600;">{{c.name}}</b> <span style="color: #5A6472;">{{c.meta}}</span></span>
+            <span style="font-size: 14px; line-height: 1.55;">{{c.text}}</span>
+          </span>
+        </div>
+      </sc-for>
+    </section>
+  </main>
+
+  <form style="height: 76px; flex-shrink: 0; box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 0 12px 0 16px; border-top: 1px solid #E3E6EA;">
+    <label for="cmtInput" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">댓글 입력</label>
+    <input id="cmtInput" type="text" placeholder="댓글을 남겨주세요" style="flex-grow: 1; min-width: 0; height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 22px; background: #F4F5F7; font-family: inherit; font-size: 15px; color: #18202C;">
+    <button type="submit" aria-label="댓글 보내기" style="width: 44px; height: 44px; border: 0; border-radius: 22px; background: #E3E6EA; color: #5A6472; display: flex; align-items: center; justify-content: center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </button>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+comments: [
+{ name: '합정동고양이', meta: '합정동 · 15분 전', text: '망원역 근처 24시 동물의료센터 일요일에도 열어요. 저도 지난달에 다녀왔어요.' },
+{ name: '서교동주민', meta: '서교동 · 10분 전', text: '성산동 쪽에 일요일 오후 5시까지 하는 병원 있어요. 전화로 먼저 확인해 보세요.' },
+{ name: '망원동산책러', meta: '작성자 · 5분 전', text: '감사합니다! 전화해 보고 다녀올게요.' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

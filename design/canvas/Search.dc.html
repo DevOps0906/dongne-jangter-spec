@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>검색</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 64px; flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 0 12px 0 4px;">
+    <a href="Home.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    <label for="searchQuery" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">망원동 근처에서 검색</label>
+    <div style="flex-grow: 1; min-width: 0; display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 12px; border-radius: 8px; background: #F4F5F7;">
+      <input id="searchQuery" type="search" value="의자" style="flex-grow: 1; min-width: 0; border: 0; background: transparent; font-family: inherit; font-size: 16px; color: #18202C; height: 40px;">
+      <button type="button" aria-label="검색어 지우기" style="width: 32px; height: 32px; border: 0; border-radius: 16px; background: #D5DAE1; color: #18202C; display: flex; align-items: center; justify-content: center;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <div role="group" aria-label="검색 필터" style="display: flex; gap: 8px; padding: 4px 16px 12px; flex-shrink: 0; border-bottom: 1px solid #EEF0F3;">
+    <button type="button" aria-pressed="true" style="display: flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #18202C; background: #18202C; color: #FFFFFF; font-family: inherit; font-size: 13px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>거래 가능만</button>
+    <button type="button" style="display: flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 13px;">가격<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+    <button type="button" style="display: flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 13px;">최신순<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+  </div>
+
+  <section style="padding: 14px 16px 6px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="margin: 0; font-size: 13px; font-weight: 600; color: #5A6472;">최근 검색어</h2>
+      <button type="button" style="height: 32px; border: 0; background: transparent; font-family: inherit; font-size: 12px; color: #5A6472;">모두 지우기</button>
+    </div>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <span style="display: flex; align-items: center; gap: 2px; height: 32px; padding: 0 4px 0 12px; border-radius: 16px; border: 1px solid #E3E6EA; font-size: 13px;">의자<button type="button" aria-label="의자 검색어 삭제" style="width: 28px; height: 28px; border: 0; background: transparent; color: #5A6472; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>
+      <span style="display: flex; align-items: center; gap: 2px; height: 32px; padding: 0 4px 0 12px; border-radius: 16px; border: 1px solid #E3E6EA; font-size: 13px;">유모차<button type="button" aria-label="유모차 검색어 삭제" style="width: 28px; height: 28px; border: 0; background: transparent; color: #5A6472; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>
+      <span style="display: flex; align-items: center; gap: 2px; height: 32px; padding: 0 4px 0 12px; border-radius: 16px; border: 1px solid #E3E6EA; font-size: 13px;">에어팟 프로<button type="button" aria-label="에어팟 프로 검색어 삭제" style="width: 28px; height: 28px; border: 0; background: transparent; color: #5A6472; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>
+    </div>
+  </section>
+
+  <h2 style="margin: 8px 16px 0; font-size: 13px; font-weight: 600; color: #5A6472;">망원동 근처 2km · 결과 <span style="color: #18202C; font-variant-numeric: tabular-nums;">14</span>건</h2>
+  <main style="flex-grow: 1; min-height: 0; overflow: hidden;">
+    <sc-for list="{{items}}" as="item" hint-placeholder-count="4">
+      <a href="ProductDetail.dc.html" style="display: flex; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #EEF0F3; color: #18202C; text-decoration: none;">
+        <span style="width: 88px; height: 88px; flex-shrink: 0; border-radius: 8px; background: #EEF0F3; display: flex; align-items: center; justify-content: center; color: #5A6472; font-size: 11px;">[상품 사진]</span>
+        <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-size: 15px; font-weight: 500; line-height: 1.4;">{{item.title}}</span>
+          <span style="font-size: 12px; color: #5A6472;">{{item.meta}}</span>
+          <span style="font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums;">{{item.price}}</span>
+        </span>
+      </a>
+    </sc-for>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+items: [
+{ title: '이케아 포엥 암체어', meta: '합정동 · 12분 전', price: '35,000원' },
+{ title: '시디즈 T50 사무용 의자', meta: '망원동 · 40분 전', price: '120,000원' },
+{ title: '원목 식탁 의자 4개', meta: '서교동 · 2시간 전', price: '60,000원' },
+{ title: '접이식 캠핑 의자', meta: '성산동 · 5시간 전', price: '12,000원' },
+{ title: '아기 식탁 의자 (트립트랩 호환 쿠션 포함)', meta: '망원동 · 어제', price: '85,000원' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

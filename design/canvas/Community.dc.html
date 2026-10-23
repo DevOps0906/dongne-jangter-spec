@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>동네생활</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden; position: relative;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 4px 0 16px;">
+    <h1 style="margin: 0; display: flex; align-items: baseline; gap: 8px; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 20px;">동네생활<span style="font-family: 'IBM Plex Sans KR', sans-serif; font-weight: 500; font-size: 13px; color: #5A6472;">망원동</span></h1>
+    <button type="button" aria-label="동네생활 검색" style="width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </button>
+  </header>
+
+  <div role="group" aria-label="주제" style="display: flex; gap: 8px; padding: 4px 16px 12px; overflow: hidden; flex-shrink: 0; border-bottom: 1px solid #EEF0F3;">
+    <button type="button" aria-pressed="true" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #18202C; background: #18202C; color: #FFFFFF; font-family: inherit; font-size: 14px;">전체</button>
+    <button type="button" aria-pressed="false" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 14px;">동네질문</button>
+    <button type="button" aria-pressed="false" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 14px;">맛집</button>
+    <button type="button" aria-pressed="false" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 14px;">분실·실종</button>
+    <button type="button" aria-pressed="false" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #D5DAE1; background: #FFFFFF; color: #18202C; font-family: inherit; font-size: 14px;">동네소식</button>
+  </div>
+
+  <main style="flex-grow: 1; min-height: 0; overflow: hidden;">
+    <sc-for list="{{posts}}" as="post" hint-placeholder-count="4">
+      <a href="PostDetail.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 16px; border-bottom: 1px solid #EEF0F3; color: #18202C; text-decoration: none;">
+        <span style="align-self: flex-start; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #F1F3F5; color: #4B5563;">{{post.topic}}</span>
+        <span style="font-size: 15px; font-weight: 600; line-height: 1.4;">{{post.title}}</span>
+        <span style="font-size: 14px; line-height: 1.55; color: #5A6472;">{{post.body}}</span>
+        <span style="display: flex; justify-content: space-between; font-size: 12px; color: #5A6472; font-variant-numeric: tabular-nums;">
+          <span>{{post.meta}}</span>
+          <span>공감 {{post.likes}} · 댓글 {{post.comments}}</span>
+        </span>
+      </a>
+    </sc-for>
+  </main>
+
+  <a href="PostWrite.dc.html" style="position: absolute; right: 16px; bottom: 100px; display: flex; align-items: center; gap: 6px; height: 48px; padding: 0 18px 0 14px; border-radius: 24px; background: #C2410C; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(24,32,44,0.22);">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    글쓰기
+  </a>
+
+  <dc-import name="TabBar" active="community" hint-size="390px,84px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+posts: [
+{ topic: '동네질문', title: '망원동 근처 일요일에 여는 동물병원 있을까요?', body: '강아지가 사료를 잘 안 먹어서요. 일요일 오후에 진료하는 곳 아시면 알려주세요.', meta: '망원동 · 20분 전', likes: 3, comments: 6 },
+{ topic: '분실·실종', title: '망원한강공원에서 검은색 카드지갑 주웠어요', body: '오늘 오후 3시쯤 자전거 도로 옆 벤치에서요. 망원지구대에 맡겨둘게요.', meta: '망원동 · 1시간 전', likes: 14, comments: 2 },
+{ topic: '맛집', title: '성산동 새로 생긴 칼국수집 다녀왔어요', body: '바지락 양이 많고 김치가 맛있어요. 점심 12시쯤엔 줄이 조금 있어요.', meta: '성산동 · 3시간 전', likes: 22, comments: 11 },
+{ topic: '동네소식', title: '망원시장 주말 야시장 이번 주 토요일부터', body: '오후 6시부터 10시까지 열린대요. 주차는 어려우니 걸어오시는 걸 추천해요.', meta: '망원동 · 5시간 전', likes: 31, comments: 4 }
+]
+};
+}
+}
+</script>
+</body>
+</html>

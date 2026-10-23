@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>설정</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F5F7; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden; position: relative;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 0 4px; background: #FFFFFF;">
+    <a href="My.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 18px;">설정</h1>
+  </header>
+
+  <main style="flex-grow: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 8px; padding-top: 8px;">
+    <section aria-labelledby="setNoti" style="background: #FFFFFF; padding: 4px 0;">
+      <h2 id="setNoti" style="margin: 0; padding: 12px 16px 4px; font-size: 13px; font-weight: 600; color: #5A6472;">알림 · 바꾸면 바로 저장돼요</h2>
+      <sc-for list="{{toggles}}" as="t" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 16px;">
+          <span style="flex-grow: 1; display: flex; flex-direction: column;">
+            <span style="font-size: 15px;">{{t.label}}</span>
+            <span style="font-size: 12px; color: #5A6472;">{{t.hint}}</span>
+          </span>
+          <button type="button" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" style="width: 52px; height: 32px; flex-shrink: 0; border: 0; border-radius: 16px; background: {{t.track}}; padding: 3px; display: flex; justify-content: {{t.justify}};">
+            <span style="width: 26px; height: 26px; border-radius: 13px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(24,32,44,0.3);"></span>
+          </button>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-labelledby="setAcc" style="background: #FFFFFF;">
+      <h2 id="setAcc" style="margin: 0; padding: 14px 16px 4px; font-size: 13px; font-weight: 600; color: #5A6472;">계정</h2>
+      <div style="display: flex; align-items: center; min-height: 52px; padding: 0 16px; gap: 12px; border-bottom: 1px solid #EEF0F3;"><span style="flex-grow: 1; font-size: 15px;">휴대폰 번호</span><span style="font-size: 14px; color: #5A6472; font-variant-numeric: tabular-nums;">010-****-5678</span><button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #C9CFD7; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600; color: #18202C;">변경</button></div>
+      <div style="display: flex; align-items: center; min-height: 52px; padding: 0 16px; gap: 12px; border-bottom: 1px solid #EEF0F3;"><span style="flex-grow: 1; font-size: 15px;">연결된 계정</span><span style="font-size: 14px; color: #5A6472;">카카오</span></div>
+      <button type="button" style="display: flex; align-items: center; width: 100%; min-height: 52px; padding: 0 16px; border: 0; background: transparent; font-family: inherit; font-size: 15px; color: #18202C; text-align: left;">로그아웃</button>
+    </section>
+
+    <section aria-labelledby="setDanger" style="margin: 8px 16px 0; padding: 16px; border: 1.5px solid #B91C1C; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px;">
+      <h2 id="setDanger" style="margin: 0; font-size: 15px; font-weight: 700; color: #B91C1C;">회원 탈퇴</h2>
+      <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #18202C;">탈퇴하면 30일 뒤 판매내역, 채팅, 받은 후기가 모두 삭제되고 되돌릴 수 없어요. 30일 안에 다시 로그인하면 탈퇴가 취소돼요.</p>
+      <label for="setConfirm" style="font-size: 12px; color: #5A6472;">확인을 위해 <b style="color: #18202C;">탈퇴</b>라고 입력해 주세요</label>
+      <div style="display: flex; gap: 8px;">
+        <input id="setConfirm" type="text" style="flex-grow: 1; min-width: 0; height: 44px; box-sizing: border-box; padding: 0 12px; border: 1px solid #C9CFD7; border-radius: 8px; font-family: inherit; font-size: 15px; color: #18202C; background: #FFFFFF;">
+        <button type="button" disabled style="height: 44px; padding: 0 14px; border: 1px solid #B91C1C; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #B91C1C; opacity: 0.55;">탈퇴하기</button>
+      </div>
+    </section>
+
+    <p style="margin: 8px 16px 0; font-size: 12px; color: #5A6472;">버전 0.1.0 · <a href="#terms" style="color: #18202C;">이용약관</a> · <a href="#privacy" style="color: #18202C;">개인정보처리방침</a></p>
+  </main>
+
+  <div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 10px; background: #18202C; color: #FFFFFF; font-size: 14px; box-shadow: 0 6px 16px rgba(24,32,44,0.25);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    동네생활 댓글 알림을 껐어요
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const t = (label, hint, on) => ({ label, hint, pressed: on ? 'true' : 'false', track: on ? '#18202C' : '#C9CFD7', justify: on ? 'flex-end' : 'flex-start' });
+return {
+toggles: [
+t('채팅 알림', '새 메시지가 오면 알려드려요', true),
+t('관심 물건 알림', '가격이 내려가거나 예약이 풀리면 알려드려요', true),
+t('동네생활 댓글 알림', '내 글에 댓글이 달리면 알려드려요', false)
+]
+};
+}
+}
+</script>
+</body>
+</html>

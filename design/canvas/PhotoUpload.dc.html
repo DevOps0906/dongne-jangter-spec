@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>사진 올리기</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 4px;">
+    <a href="Home.dc.html" aria-label="닫기" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 17px;">내 물건 팔기</h1>
+    <button type="button" style="height: 44px; padding: 0 10px; border: 0; background: transparent; font-family: inherit; font-size: 14px; font-weight: 600; color: #5A6472;">임시저장</button>
+  </header>
+
+  <ol aria-label="등록 단계" style="list-style: none; margin: 0; padding: 0 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;">
+    <li aria-current="step" style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #18202C; font-weight: 700;"><span style="height: 4px; border-radius: 2px; background: #C2410C;"></span>1 사진</li>
+    <li style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #5A6472;"><span style="height: 4px; border-radius: 2px; background: #E3E6EA;"></span>2 정보</li>
+    <li style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #5A6472;"><span style="height: 4px; border-radius: 2px; background: #E3E6EA;"></span>3 가격·장소</li>
+  </ol>
+
+  <div style="padding: 22px 16px 0; display: flex; flex-direction: column; gap: 6px;">
+    <h2 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 20px;">사진을 올려주세요</h2>
+    <p style="margin: 0; font-size: 14px; color: #5A6472;">최대 10장까지 올릴 수 있어요. 첫 번째 사진이 대표 사진이 돼요.</p>
+  </div>
+
+  <div style="padding: 18px 16px 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
+    <button type="button" style="aspect-ratio: 1; border: 1.5px dashed #C9CFD7; border-radius: 10px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-family: inherit; color: #5A6472;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+      <span style="font-size: 13px; font-variant-numeric: tabular-nums;"><b style="color: #18202C;">4</b> / 10</span>
+    </button>
+
+    <div style="aspect-ratio: 1; border-radius: 10px; background: #E6E9EE; position: relative; display: flex; align-items: center; justify-content: center; color: #5A6472; font-size: 11px;">
+      [사진 1]
+      <span style="position: absolute; left: 6px; bottom: 6px; padding: 1px 6px; border-radius: 4px; background: #18202C; color: #FFFFFF; font-size: 11px; font-weight: 600;">대표</span>
+      <button type="button" aria-label="사진 1 삭제" style="position: absolute; top: 2px; right: 2px; width: 32px; height: 32px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center;"><span style="width: 20px; height: 20px; border-radius: 10px; background: rgba(24,32,44,0.75); color: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+    </div>
+
+    <div style="aspect-ratio: 1; border-radius: 10px; background: #E6E9EE; position: relative; display: flex; align-items: center; justify-content: center; color: #5A6472; font-size: 11px;">
+      [사진 2]
+      <span style="position: absolute; left: 6px; bottom: 6px; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 10px; background: #166534; color: #FFFFFF;" aria-label="업로드 완료"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+    </div>
+
+    <div style="aspect-ratio: 1; border-radius: 10px; background: #E6E9EE; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #18202C;">
+      <span style="font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;">64%</span>
+      <span style="font-size: 11px; color: #5A6472;">올리는 중</span>
+      <span style="position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: rgba(24,32,44,0.12);"><span style="display: block; width: 64%; height: 5px; background: #C2410C;"></span></span>
+    </div>
+
+    <div style="aspect-ratio: 1; border-radius: 10px; background: #FEF6F6; border: 1.5px solid #F3C4C4; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #B91C1C;">
+      <span style="font-size: 12px; font-weight: 700;">실패</span>
+      <button type="button" style="display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 10px; border: 1px solid #B91C1C; border-radius: 16px; background: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 600; color: #B91C1C;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>다시 시도</button>
+    </div>
+  </div>
+
+  <div role="alert" style="margin: 16px 16px 0; padding: 12px 14px; border-radius: 8px; background: #FEF6F6; font-size: 13px; line-height: 1.5; color: #7F1D1D;">사진 1장을 올리지 못했어요. 인터넷 연결을 확인하고 다시 시도를 눌러주세요.</div>
+
+  <ul style="margin: 18px 16px 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5A6472;">
+    <li>밝은 곳에서 물건 전체가 보이게 찍어주세요</li>
+    <li>흠집이나 사용감이 있으면 가까이 찍어주세요</li>
+  </ul>
+
+  <div style="margin-top: auto; padding: 0 16px 28px;">
+    <a href="ProductWrite.dc.html" style="display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 8px; background: #C2410C; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none;">다음 · 정보 입력</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

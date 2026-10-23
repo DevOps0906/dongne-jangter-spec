@@ -1,0 +1,630 @@
+<title>중고거래마켓 화면 구조도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* 레이아웃: 설계도 한 장. 위에서 아래로 진입 흐름 → 앱 셸 → 5탭 트리(오른쪽 상세 패널) → 거래 흐름 → 패턴 현황 → 구현 순서 */
+:root {
+  --bg: #F3F4F6;
+  --surface: #FFFFFF;
+  --ink: #18202C;
+  --muted: #5A6472;
+  --line: #CDD3DB;
+  --grid: #E6E9EE;
+  --accent: #D9480F;
+
+  --pa: #4B5563; --pb: #1D5FD6; --pg: #0B7F6F; --ph: #6A45E8;
+  --pf: #B4235F; --pi: #4A7A0C; --pm: #8A4A12; --pn: #5B5650; --pu: #6B7280;
+
+  --f-display: "Gothic A1", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151B; --surface: #191F27; --ink: #E6E9EF; --muted: #9AA3B0;
+    --line: #333C49; --grid: #1F262F; --accent: #FF7B33;
+    --pa: #A3AEBD; --pb: #6E9CFF; --pg: #3FC7B0; --ph: #A68DFF;
+    --pf: #F27AAE; --pi: #9CCB4E; --pm: #DDA46A; --pn: #BDB6AD; --pu: #9AA3B0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151B; --surface: #191F27; --ink: #E6E9EF; --muted: #9AA3B0;
+  --line: #333C49; --grid: #1F262F; --accent: #FF7B33;
+  --pa: #A3AEBD; --pb: #6E9CFF; --pg: #3FC7B0; --ph: #A68DFF;
+  --pf: #F27AAE; --pi: #9CCB4E; --pm: #DDA46A; --pn: #BDB6AD; --pu: #9AA3B0;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-block: 32px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); font-size: 12px; }
+.muted { color: var(--muted); }
+.eyebrow {
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* 머리 */
+header { display: flex; flex-direction: column; gap: 12px; }
+header .lead { max-width: 68ch; color: var(--muted); }
+.stats {
+  display: flex; flex-wrap: wrap; gap: 8px 24px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding-block: 12px; margin-top: 8px;
+}
+.stat { display: flex; align-items: baseline; gap: 8px; }
+.stat b { font-family: var(--f-display); font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 13px; }
+
+/* 섹션 머리 */
+.sec { display: flex; flex-direction: column; gap: 16px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.sec-head p { color: var(--muted); font-size: 13px; max-width: 70ch; }
+
+/* 칩 */
+.chip {
+  --c: var(--pu);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--f-mono); font-size: 11.5px; font-weight: 600;
+  padding: 2px 8px; border-radius: 4px; line-height: 1.6;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--c) 35%, var(--surface));
+  white-space: nowrap;
+}
+.chip.vis { --c: var(--muted); background: transparent; }
+.chip.uniq { border-style: dashed; background: transparent; }
+.chip .nm { font-family: var(--f-body); font-weight: 500; }
+
+/* 범례 */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.legend button {
+  all: unset; cursor: pointer; border-radius: 5px;
+}
+.legend button:focus-visible, .node:focus-visible, .flow-step:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.legend button[aria-pressed="true"] .chip { box-shadow: 0 0 0 2px var(--c); }
+.legend .reset {
+  font-size: 12.5px; color: var(--muted); padding: 2px 8px;
+  border: 1px solid var(--line); background: var(--surface);
+}
+.legend .reset[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+
+/* 다이어그램 판 */
+.board {
+  display: grid; gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 1240px) {
+  .board { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+}
+.diagram {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 24px; display: flex; flex-direction: column; align-items: stretch; gap: 0;
+  min-width: 0;
+}
+.lane-label {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+
+/* 진입 흐름 */
+.entry { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.entry .arrow { color: var(--muted); font-family: var(--f-mono); }
+
+/* 수직 연결선 */
+.drop { height: 28px; width: 0; border-left: 2px solid var(--line); margin: 0 auto; }
+
+/* 셸 */
+.shell-row { display: flex; justify-content: center; }
+.shell-row .node { max-width: 420px; width: 100%; border-width: 2px; border-color: var(--ink); }
+
+/* 탭 트리 */
+.tabs {
+  position: relative;
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-top: 24px;
+}
+.tabs::before {
+  content: ""; position: absolute; top: 0; left: 10%; right: 10%;
+  border-top: 2px solid var(--line);
+}
+.col { position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.col::before {
+  content: ""; position: absolute; top: -24px; left: 50%; height: 24px;
+  border-left: 2px solid var(--line);
+}
+.tab-head {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px 10px; border-radius: 6px;
+  background: var(--ink); color: var(--surface);
+}
+.tab-head .t { font-family: var(--f-display); font-weight: 700; font-size: 14px; line-height: 1.35; }
+.tab-head .r { font-family: var(--f-mono); font-size: 11px; opacity: 0.75; }
+.tab-head .i { font-family: var(--f-mono); font-size: 10.5px; opacity: 0.6; }
+
+@media (max-width: 1099px) {
+  .tabs { grid-template-columns: minmax(0, 1fr); padding-top: 0; padding-left: 22px; gap: 18px; }
+  .tabs::before { top: 0; bottom: 18px; left: 6px; right: auto; border-top: 0; border-left: 2px solid var(--line); }
+  .col::before { top: 18px; left: -16px; height: 0; width: 16px; border-left: 0; border-top: 2px solid var(--line); }
+  .drop { margin: 0 0 0 6px; }
+  .shell-row { justify-content: flex-start; }
+}
+
+/* 화면 노드 */
+.node {
+  all: unset; box-sizing: border-box; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 12px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--line);
+  transition: opacity .15s, border-color .15s;
+  position: relative; min-width: 0;
+}
+.node:hover { border-color: var(--muted); }
+.node .nm { font-weight: 600; font-size: 14px; line-height: 1.4; }
+.node .rt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+.node .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.node[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.node.dim { opacity: 0.28; }
+.node.d1 { margin-left: 14px; }
+.node.d2 { margin-left: 28px; }
+.node.d1::before, .node.d2::before {
+  content: ""; position: absolute; left: -9px; top: -9px; width: 8px; height: 26px;
+  border-left: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+  border-bottom-left-radius: 4px;
+}
+.col-count { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* 상세 패널 */
+.detail {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+}
+@media (min-width: 1240px) { .detail { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); } }
+.detail h3 { font-size: 20px; font-weight: 800; }
+.detail dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.detail dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.detail dd { margin: 2px 0 0; font-size: 14px; overflow-wrap: anywhere; }
+.detail .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.detail .hint { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+
+/* 거래 흐름 */
+.flow {
+  display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px;
+}
+.flow-step {
+  all: unset; box-sizing: border-box; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line);
+  min-width: 140px; flex: 1 1 140px;
+}
+.flow-step.static { cursor: default; border-style: dashed; }
+.flow-step .k { font-family: var(--f-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.flow-step .nm { font-weight: 600; font-size: 14px; }
+.flow-step .note { font-size: 12px; color: var(--muted); }
+.flow-arrow { align-self: center; color: var(--muted); font-family: var(--f-mono); }
+@media (max-width: 700px) { .flow-arrow { display: none; } }
+
+/* 패턴 현황 */
+.two { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .two { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+.panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0;
+}
+.panel h3 { font-size: 15px; font-weight: 700; }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 28px; gap: 10px; align-items: center; }
+.bar-track { height: 10px; background: var(--grid); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--c); border-radius: 2px; }
+.bar-n { font-family: var(--f-mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .bar-row { grid-template-columns: 112px minmax(0, 1fr) 24px; } }
+.unused { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.unused li { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; }
+.unused .chip { text-decoration: line-through; flex-shrink: 0; }
+
+/* 구현 순서 */
+.order { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.order li {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 14px; display: flex; flex-direction: column; gap: 6px;
+}
+.order .no { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 600; }
+.order .t { font-weight: 600; font-size: 14px; }
+.order .s { font-size: 12.5px; color: var(--muted); }
+
+/* 규칙 */
+.rules { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .rules { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.rules ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; }
+.conflict { display: flex; flex-direction: column; gap: 10px; }
+.conflict .row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; font-size: 13.5px; }
+.swatch { width: 28px; height: 28px; border-radius: 4px; border: 1px solid var(--line); }
+.tag-warn {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 600; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 3px; padding: 0 6px; margin-right: 6px;
+}
+
+footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 4px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">com.nomad.karrot · Flutter 3.32 / Dart 3.8 · 2026-10-23</span>
+    <h1>중고거래마켓 화면 구조도</h1>
+    <p class="lead">platform-docs 디자인 가이드의 구조 패턴(A~O)과 시각 아키타입(V-A~V-N)을 21개 화면에 지정한 결과입니다. 화면을 누르면 오른쪽에 상세가 열리고, 범례의 패턴을 누르면 그 패턴을 쓰는 화면만 강조됩니다.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section class="sec" aria-labelledby="s-tree">
+    <div class="sec-head">
+      <h2 id="s-tree">화면 트리</h2>
+      <p>표기: 패턴 칩(구조) + 회색 테두리 칩(시각). <span class="mono">G페이지</span>는 상세를 전체 페이지로 여는 변형입니다.</p>
+    </div>
+    <div class="legend" id="legend" role="group" aria-label="패턴 필터"></div>
+
+    <div class="board">
+      <div class="diagram">
+        <div class="lane-label">앱 진입 (탭 밖, 최초 1회)</div>
+        <div class="entry" id="entry"></div>
+        <div class="drop" aria-hidden="true"></div>
+        <div class="lane-label" style="text-align:center" id="shell-label">앱 셸</div>
+        <div class="shell-row" id="shell"></div>
+        <div class="drop" aria-hidden="true"></div>
+        <div class="tabs" id="tabs"></div>
+      </div>
+
+      <aside class="detail" id="detail" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-flow">
+    <div class="sec-head">
+      <h2 id="s-flow">핵심 거래 흐름</h2>
+      <p>동네 인증부터 매너 평가까지 사용자가 한 번의 거래에서 지나는 화면 순서입니다. 각 단계를 누르면 위 트리에서 해당 화면이 선택됩니다.</p>
+    </div>
+    <div class="flow" id="flow"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-usage">
+    <div class="sec-head">
+      <h2 id="s-usage">패턴 사용 현황</h2>
+      <p>한 화면이 패턴 두 개를 쓰면(예: B + G) 양쪽에 모두 셉니다.</p>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h3>화면 수 (패턴별)</h3>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="panel">
+        <h3>쓰지 않는 패턴</h3>
+        <ul class="unused">
+          <li><span class="chip">C</span><span><b>KPI 오버뷰</b> · 사용자는 숫자를 보러 오지 않고 물건을 보러 온다. 홈은 피드(B)</span></li>
+          <li><span class="chip">D</span><span><b>칸반</b> · 판매중 → 예약중 → 판매완료는 상태 배지 + 선택 시트로 바꾼다</span></li>
+          <li><span class="chip">E J K L O</span><span><b>캘린더, 에디터+미리보기, 노드 캔버스, 분석 탐색, 스프레드시트</b> · 해당 화면이 없다</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="s-order">
+    <div class="sec-head">
+      <h2 id="s-order">공용 위젯 구현 순서</h2>
+      <p>원본 공용화 기준: 쓰지 않는 패턴은 미리 만들지 않는다. 여러 화면이 공유하는 뼈대부터 만든다.</p>
+    </div>
+    <ol class="order" id="order"></ol>
+  </section>
+
+  <section class="sec" aria-labelledby="s-rules">
+    <div class="sec-head"><h2 id="s-rules">시각 규칙과 수정 제안</h2></div>
+    <div class="rules">
+      <div class="panel">
+        <h3>모든 화면 공통</h3>
+        <ul>
+          <li>트레이딩 문법 적합도 <b>부적합</b>: 캔들·호가창·네온 다크를 쓰지 않는다</li>
+          <li>포인트컬러는 화면당 1개. 브랜드 오렌지는 CTA·선택 상태·현재 탭에만</li>
+          <li>상태 5종 필수: 기본 · 로딩(스켈레톤) · 빈 상태 · 오류 · 권한 없음</li>
+          <li>상태는 색만으로 표시하지 않는다. 판매중·예약중·판매완료는 텍스트 배지</li>
+          <li>가격·매너온도·조회수는 등폭 숫자(<span class="mono">tabularFigures</span>)</li>
+          <li>위젯 안에서 <span class="mono">Color(0xFF…)</span> 직접 사용 금지, <span class="mono">AppTokens</span>만 참조</li>
+          <li>검증: 라이트/다크, 360dp 폭, 글자 크기 130%, TalkBack</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>기존 기획안 색상과의 충돌</h3>
+        <div class="conflict">
+          <div class="row">
+            <div class="swatch" style="background:#FF6F0F" aria-hidden="true"></div>
+            <div><span class="tag-warn">충돌</span><span class="mono">tempOrange #FF6F0F</span> 브랜드색과 hex가 같다. 매너온도 구간색은 브랜드색을 쓰지 않는 별도 팔레트로</div>
+          </div>
+          <div class="row">
+            <div class="swatch" style="background:#FF9500" aria-hidden="true"></div>
+            <div><span class="tag-warn">충돌</span><span class="mono">statusReserved #FF9500</span> 브랜드 오렌지와 가까워 예약중 배지와 CTA가 섞인다. 파랑·노랑 계열 별도 토큰으로, 대비 4.5:1 확인 후 확정</div>
+          </div>
+          <p class="muted" style="font-size:12.5px">원본 규칙은 "브랜드색과 상승·하락색의 분리"입니다. 두 항목은 그 취지를 유추 적용한 제안입니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>근거: platform-docs <span class="mono">products/_design-guide/</span> DASHBOARD_PATTERNS.md · DASHBOARD_VISUAL.md · DESIGN_SYSTEM.md</span>
+    <span>원본은 웹 관리자 화면 기준입니다. 하단 탭 전환, F 3단 → 1단 같은 모바일 변형은 이 구조도의 제안입니다.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var PAT = {
+    A: { nm: "앱 셸", kind: "뼈대", c: "--pa" },
+    B: { nm: "리스트-상세", kind: "기본", c: "--pb" },
+    G: { nm: "레코드 상세", kind: "기본", c: "--pg" },
+    H: { nm: "설정", kind: "기본", c: "--ph" },
+    F: { nm: "인박스", kind: "선택", c: "--pf" },
+    I: { nm: "위저드·단계형", kind: "선택", c: "--pi" },
+    M: { nm: "미디어 갤러리", kind: "선택", c: "--pm" },
+    N: { nm: "작업 모니터", kind: "선택", c: "--pn" },
+    U: { nm: "고유", kind: "고유", c: "--pu" }
+  };
+  var ORDER = ["A", "B", "G", "H", "F", "I", "M", "N", "U"];
+
+  var TABS = [
+    { id: "home", idx: 0, t: "홈", r: "/home" },
+    { id: "community", idx: 1, t: "동네생활", r: "/community" },
+    { id: "write", idx: 2, t: "글쓰기", r: "/product/write · FAB" },
+    { id: "chat", idx: 3, t: "채팅", r: "/chat" },
+    { id: "my", idx: 4, t: "나의 중고거래마켓", r: "/my" }
+  ];
+
+  var S = [
+    { id: "login", g: "entry", nm: "로그인·인증", rt: "/login · /login/verify", p: ["I"], pl: "I", v: "V-E + V-K",
+      mob: "전화번호(기본)·이메일·소셜 3탭 → OTP 6자리 입력", drop: "없음" },
+    { id: "locsetup", g: "entry", nm: "동네 설정·인증", rt: "/setup/location · /location/verify · /location/select", p: ["I", "U"], pl: "I + 고유", v: "V-E",
+      mob: "온보딩 단계: 위치 권한 → GPS 인증 → 동네 범위 설정", drop: "없음" },
+    { id: "locmap", g: "entry", nm: "동네 지도", rt: "/location/map", p: ["U"], pl: "고유", v: "V-E",
+      mob: "네이버 지도 + 동네 범위 원", drop: "같은 고유 화면이 두 제품에서 나오면 새 패턴 코드로 승격. 지금은 고유로 둔다" },
+
+    { id: "shell", g: "shell", nm: "앱 셸 · BottomNavShell", rt: "StatefulShellRoute.indexedStack", p: ["A"], pl: "A", v: "V-E",
+      mob: "사이드바 대신 하단 5탭. 현재 탭 강조, 주 행동 1개(글쓰기)", drop: "사이드바 접기, ⌘K 검색, 조직 전환 제외. 상단 바는 동네 선택 + 검색 + 알림" },
+
+    { id: "feed", g: "home", d: 0, nm: "홈 피드", rt: "/home", p: ["B", "G"], pl: "B + G페이지", v: "V-E",
+      mob: "카테고리 필터 칩 + 카드 목록. 상세는 전체 페이지로 이동(모달 금지)", drop: "표, 다중 선택, 일괄 작업, 컴팩트 밀도, 저장된 뷰 제외" },
+    { id: "search", g: "home", d: 1, nm: "검색", rt: "/home/search", p: ["B"], pl: "B", v: "V-E",
+      mob: "검색어 + 필터 칩, 최근 검색어", drop: "저장된 뷰 제외" },
+    { id: "detail", g: "home", d: 1, nm: "상품 상세", rt: "/product/:id", p: ["G"], pl: "G페이지", v: "V-E + V-M(가격만)",
+      mob: "요약(제목·상태 배지·가격) → 설명 → 판매자 → 동네 지도. 하단 고정 바(관심·가격 제안·채팅하기)", drop: "탭 없이 스크롤. 활동 타임라인 대신 조회·관심·채팅 수 한 줄. 삭제·숨김은 더보기 메뉴 안" },
+    { id: "offer", g: "home", d: 2, nm: "가격 제안 시트", rt: "BottomSheet", p: [], pl: "패턴 없음", v: "V-K",
+      mob: "입력 1개 + 확인. 단계 분할 불필요", drop: "없음" },
+
+    { id: "cfeed", g: "community", d: 0, nm: "동네생활 피드", rt: "/community", p: ["B", "G"], pl: "B + G페이지", v: "V-E",
+      mob: "카테고리 칩 + 게시글 카드", drop: "표·일괄 작업 제외" },
+    { id: "post", g: "community", d: 1, nm: "게시글 상세", rt: "/community/:id", p: ["G"], pl: "G페이지", v: "V-E",
+      mob: "본문 + 댓글 스레드", drop: "탭 제외" },
+    { id: "pwrite", g: "community", d: 1, nm: "동네생활 글쓰기", rt: "/community/write", p: ["I"], pl: "I (1단계)", v: "V-E",
+      mob: "단일 폼 + 임시저장", drop: "없음" },
+
+    { id: "pnew", g: "write", d: 0, nm: "상품 등록·수정", rt: "/product/write · /product/:id/edit", p: ["I"], pl: "I", v: "V-E",
+      mob: "3단계: 사진 → 정보 → 가격·거래 희망 장소. 임시저장, 이전 단계, 마지막 요약", drop: "한 단계에 입력 10개 이상 금지" },
+    { id: "upload", g: "write", d: 1, nm: "이미지 업로드", rt: "등록 화면 안", p: ["M", "N"], pl: "M + N 축소", v: "시각 없음",
+      mob: "썸네일 그리드 + 장당 진행률 + 실패 재시도", drop: "진행률 없는 무한 스피너 금지" },
+
+    { id: "clist", g: "chat", d: 0, nm: "채팅 목록", rt: "/chat", p: ["F"], pl: "F (3단 → 1단)", v: "V-E",
+      mob: "상태 필터(전체·판매·구매) + 미읽음 배지", drop: "담당자 지정, 단축키, AI 답변 초안 제외" },
+    { id: "room", g: "chat", d: 1, nm: "채팅방", rt: "/chat/:roomId", p: ["F"], pl: "F 본문", v: "V-E",
+      mob: "상단 고정 상품 바 + 메시지 + 입력 바. 상품 상태 변경", drop: "본문을 모달로 열지 않음" },
+
+    { id: "my", g: "my", d: 0, nm: "나의 중고거래마켓", rt: "/my", p: ["H", "G"], pl: "H + G", v: "V-E · 매너온도 V-F",
+      mob: "프로필 요약 + 매너온도 위젯 + 메뉴 목록", drop: "한 페이지 전체 저장 버튼 금지" },
+    { id: "sales", g: "my", d: 1, nm: "판매·구매 내역", rt: "/my/sales · /my/purchases", p: ["B", "G"], pl: "B + G", v: "V-E",
+      mob: "상태 필터 칩(판매중·예약중·완료) + 카드", drop: "일괄 작업 제외" },
+    { id: "likes", g: "my", d: 1, nm: "관심 목록", rt: "/my/likes", p: ["B"], pl: "B", v: "V-E",
+      mob: "카드 목록", drop: "없음" },
+    { id: "seller", g: "my", d: 1, nm: "판매자 프로필", rt: "/profile/:userId", p: ["G"], pl: "G페이지", v: "V-E · 매너온도 V-F",
+      mob: "요약(닉네임·매너온도) + 탭 2개(판매 물품·후기)", drop: "탭 3개 이상 금지" },
+    { id: "review", g: "my", d: 1, nm: "매너 평가", rt: "/review/write", p: ["I"], pl: "I", v: "V-E",
+      mob: "2단계: 긍정·부정 선택 → 키워드 선택", drop: "없음" },
+    { id: "settings", g: "my", d: 1, nm: "설정", rt: "/my/settings", p: ["H"], pl: "H", v: "V-E",
+      mob: "섹션별 저장(알림 토글은 즉시 저장 + 토스트). 탈퇴는 맨 아래 위험 영역, 확인 문구 입력", drop: "설정을 모달 여러 겹으로 열지 않음" }
+  ];
+
+  var FLOW = [
+    { id: "locsetup", note: "GPS → 법정동" },
+    { id: "feed", note: "동네 범위 안 상품" },
+    { id: "detail", note: "관심 · 가격 제안" },
+    { id: "room", note: "Supabase Realtime" },
+    { label: "판매완료로 변경", pl: "배지 + 선택 시트", note: "D 칸반 대신" },
+    { id: "review", note: "매너온도 트리거" }
+  ];
+
+  var BUILD = [
+    { t: "토큰·테마", s: "AppPalette + AppTokens, 라이트/다크 두 벌", p: null },
+    { t: "A 앱 셸", s: "BottomNavShell", p: "A" },
+    { t: "B 카드 목록", s: "필터 칩 + 상태 5종", p: "B" },
+    { t: "G 상세 뼈대", s: "요약 → 본문 → 하단 고정 바", p: "G" },
+    { t: "I 스텝 폼", s: "임시저장 · 이전 단계 · 요약", p: "I" },
+    { t: "H 설정 섹션", s: "섹션별 저장 · 위험 영역", p: "H" },
+    { t: "F 채팅", s: "고유 로직이 많아 마지막", p: "F" }
+  ];
+
+  var byId = {};
+  S.forEach(function (s) { byId[s.id] = s; });
+
+  var state = { sel: "detail", filter: null };
+
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function chip(code, withName) {
+    var p = PAT[code];
+    var cls = "chip" + (code === "U" ? " uniq" : "");
+    var label = code === "U" ? "고유" : code;
+    return '<span class="' + cls + '" style="--c:var(' + p.c + ')">' + label +
+      (withName && code !== "U" ? ' <span class="nm">' + esc(p.nm) + "</span>" : "") + "</span>";
+  }
+  function visChip(v) { return '<span class="chip vis">' + esc(v) + "</span>"; }
+  function noneChip() { return '<span class="chip vis">패턴 없음</span>'; }
+
+  function nodeHTML(s) {
+    var chips = (s.p.length ? s.p.map(function (c) { return chip(c); }).join("") : noneChip()) + visChip(s.v);
+    var cls = "node" + (s.d ? " d" + s.d : "");
+    return '<button type="button" class="' + cls + '" data-id="' + s.id + '" aria-pressed="false">' +
+      '<span class="nm">' + esc(s.nm) + "</span>" +
+      '<span class="rt">' + esc(s.rt) + "</span>" +
+      '<span class="chips">' + chips + "</span></button>";
+  }
+
+  // 통계
+  var used = {};
+  S.forEach(function (s) { s.p.forEach(function (c) { used[c] = (used[c] || 0) + 1; }); });
+  var usedNamed = ORDER.filter(function (c) { return c !== "U" && used[c]; }).length;
+  var veCount = S.filter(function (s) { return s.v.indexOf("V-E") !== -1; }).length;
+  document.getElementById("stats").innerHTML = [
+    ["" + S.length, "화면"],
+    ["" + TABS.length, "하단 탭"],
+    [usedNamed + "종", "사용 패턴 (+ 고유 " + (used.U || 0) + ")"],
+    [veCount + "/" + S.length, "화면이 V-E 모바일 앱"],
+    ["부적합", "트레이딩 문법 적합도"]
+  ].map(function (x) { return '<div class="stat"><b>' + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
+
+  // 범례
+  var lg = document.getElementById("legend");
+  lg.innerHTML = '<button type="button" class="reset" data-f="" aria-pressed="true">전체</button>' +
+    ORDER.filter(function (c) { return used[c]; }).map(function (c) {
+      return '<button type="button" data-f="' + c + '" aria-pressed="false" aria-label="' + PAT[c].nm + ' 패턴만 강조">' + chip(c, true) + "</button>";
+    }).join("");
+
+  // 진입 · 셸 · 탭
+  var entry = S.filter(function (s) { return s.g === "entry"; });
+  document.getElementById("entry").innerHTML = entry.map(nodeHTML).join('<span class="arrow" aria-hidden="true">→</span>');
+  document.getElementById("shell").innerHTML = nodeHTML(byId.shell);
+  document.getElementById("tabs").innerHTML = TABS.map(function (t) {
+    var list = S.filter(function (s) { return s.g === t.id; });
+    return '<div class="col"><div class="tab-head"><span class="i">TAB ' + t.idx + "</span>" +
+      '<span class="t">' + esc(t.t) + '</span><span class="r">' + esc(t.r) + "</span></div>" +
+      list.map(nodeHTML).join("") +
+      '<span class="col-count">화면 ' + list.length + "개</span></div>";
+  }).join("");
+
+  // 흐름
+  document.getElementById("flow").innerHTML = FLOW.map(function (f, i) {
+    var k = '<span class="k">STEP ' + (i + 1) + "</span>";
+    var body;
+    if (f.id) {
+      var s = byId[f.id];
+      body = '<button type="button" class="flow-step" data-id="' + s.id + '">' + k +
+        '<span class="nm">' + esc(s.nm) + "</span>" +
+        '<span class="chips" style="display:flex;flex-wrap:wrap;gap:4px">' + (s.p.length ? s.p.map(function (c) { return chip(c); }).join("") : noneChip()) + "</span>" +
+        '<span class="note">' + esc(f.note) + "</span></button>";
+    } else {
+      body = '<div class="flow-step static">' + k + '<span class="nm">' + esc(f.label) + "</span>" +
+        '<span class="chips" style="display:flex"><span class="chip vis">' + esc(f.pl) + "</span></span>" +
+        '<span class="note">' + esc(f.note) + "</span></div>";
+    }
+    return (i ? '<span class="flow-arrow" aria-hidden="true">→</span>' : "") + body;
+  }).join("");
+
+  // 막대
+  var max = Math.max.apply(null, ORDER.map(function (c) { return used[c] || 0; }));
+  document.getElementById("bars").innerHTML = ORDER.filter(function (c) { return used[c]; }).map(function (c) {
+    var n = used[c];
+    return '<div class="bar-row" style="--c:var(' + PAT[c].c + ')">' + '<span>' + chip(c, true) + "</span>" +
+      '<div class="bar-track" role="img" aria-label="' + PAT[c].nm + " " + n + '개 화면"><div class="bar-fill" style="width:' + (n / max * 100) + '%"></div></div>' +
+      '<span class="bar-n">' + n + "</span></div>";
+  }).join("");
+
+  // 구현 순서
+  document.getElementById("order").innerHTML = BUILD.map(function (b, i) {
+    var share = b.p ? "화면 " + used[b.p] + "개가 공유" : "모든 화면의 전제";
+    return '<li><span class="no">' + (i + 1) + "</span>" + '<span class="t">' + esc(b.t) + "</span>" +
+      '<span class="s">' + esc(b.s) + "</span>" + '<span class="s"><b>' + share + "</b></span></li>";
+  }).join("");
+
+  // 상세 패널
+  function tabName(g) {
+    if (g === "entry") return "앱 진입 (탭 밖)";
+    if (g === "shell") return "앱 셸";
+    var t = TABS.filter(function (x) { return x.id === g; })[0];
+    return "TAB " + t.idx + " · " + t.t;
+  }
+  function renderDetail() {
+    var s = byId[state.sel];
+    var chips = (s.p.length ? s.p.map(function (c) { return chip(c, true); }).join("") : noneChip()) + visChip(s.v);
+    document.getElementById("detail").innerHTML =
+      '<span class="eyebrow">' + esc(tabName(s.g)) + "</span>" +
+      "<h3>" + esc(s.nm) + "</h3>" +
+      '<span class="mono muted">' + esc(s.rt) + "</span>" +
+      '<div class="chips">' + chips + "</div>" +
+      "<dl>" +
+      "<div><dt>패턴 표기</dt><dd>" + esc(s.pl) + " · 시각 " + esc(s.v) + "</dd></div>" +
+      "<div><dt>모바일 변형 (제안)</dt><dd>" + esc(s.mob) + "</dd></div>" +
+      "<div><dt>빼거나 바꿀 것</dt><dd>" + esc(s.drop) + "</dd></div>" +
+      "<div><dt>상태 5종</dt><dd>기본 · 로딩(스켈레톤) · 빈 상태 · 오류 · 권한 없음</dd></div>" +
+      "</dl>" +
+      '<p class="hint">다른 화면을 누르면 내용이 바뀝니다.</p>';
+  }
+
+  function apply() {
+    document.querySelectorAll(".node").forEach(function (el) {
+      var s = byId[el.getAttribute("data-id")];
+      el.setAttribute("aria-pressed", s.id === state.sel ? "true" : "false");
+      el.classList.toggle("dim", !!state.filter && s.p.indexOf(state.filter) === -1);
+    });
+    lg.querySelectorAll("button").forEach(function (b) {
+      b.setAttribute("aria-pressed", (b.getAttribute("data-f") || null) === state.filter ? "true" : "false");
+    });
+    renderDetail();
+  }
+
+  document.addEventListener("click", function (e) {
+    var n = e.target.closest("[data-id]");
+    if (n) {
+      state.sel = n.getAttribute("data-id");
+      apply();
+      if (n.classList.contains("flow-step")) {
+        var target = document.querySelector('.node[data-id="' + state.sel + '"]');
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+    var f = e.target.closest("[data-f]");
+    if (f) {
+      var v = f.getAttribute("data-f") || null;
+      state.filter = state.filter === v ? null : v;
+      apply();
+    }
+  });
+
+  apply();
+})();
+</script>

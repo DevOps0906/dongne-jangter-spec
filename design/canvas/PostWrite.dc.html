@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>동네생활 글쓰기</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#C2410C}a:hover{color:#9A3412}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #18202C; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; overflow: hidden;">
+  <header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 4px; border-bottom: 1px solid #EEF0F3;">
+    <a href="Community.dc.html" aria-label="닫기" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #18202C;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Gothic A1', sans-serif; font-weight: 800; font-size: 17px;">동네생활 글쓰기</h1>
+    <a href="PostDetail.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 10px; font-size: 15px; font-weight: 700; color: #C2410C; text-decoration: none;">올리기</a>
+  </header>
+
+  <form style="flex-grow: 1; min-height: 0; display: flex; flex-direction: column;">
+    <div style="padding: 12px 16px; border-bottom: 1px solid #EEF0F3; display: flex; flex-direction: column; gap: 6px;">
+      <label for="pwTopic" style="font-size: 13px; font-weight: 600;">주제</label>
+      <select id="pwTopic" style="height: 44px; padding: 0 12px; border: 1px solid #C9CFD7; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 15px; color: #18202C;">
+        <option>동네질문</option>
+        <option>맛집</option>
+        <option>분실·실종</option>
+        <option>동네소식</option>
+      </select>
+    </div>
+    <div style="padding: 0 16px; border-bottom: 1px solid #EEF0F3;">
+      <label for="pwTitle" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">제목</label>
+      <input id="pwTitle" type="text" value="망원시장 근처 주차 가능한 곳 있나요?" style="width: 100%; box-sizing: border-box; height: 56px; border: 0; font-family: inherit; font-size: 17px; font-weight: 600; color: #18202C; background: transparent;">
+    </div>
+    <div style="padding: 12px 16px; flex-grow: 1; display: flex; flex-direction: column;">
+      <label for="pwBody" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">내용</label>
+      <textarea id="pwBody" style="flex-grow: 1; border: 0; resize: none; font-family: inherit; font-size: 15px; line-height: 1.7; color: #18202C; background: transparent; padding: 0;">주말에 부모님 모시고 시장에 가려는데 차를 가져가야 해서요. 공영주차장 말고 근처에 세울 만한 곳 아시면 알려주세요.</textarea>
+    </div>
+  </form>
+
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 8px 0 4px; border-top: 1px solid #E3E6EA;">
+    <div style="display: flex;">
+      <button type="button" aria-label="사진 추가" style="width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #18202C;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+      </button>
+      <button type="button" aria-label="장소 추가" style="width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #18202C;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      </button>
+    </div>
+    <span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5A6472;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      임시저장됨 · 오후 7:12 · 망원동에 올라가요
+    </span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
