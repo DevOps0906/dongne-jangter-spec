@@ -66,6 +66,43 @@ git clone --recurse-submodules <구현 레포 주소>
 
 새 마이그레이션은 `0002_...sql`처럼 번호를 올려서 추가합니다. 적용된 파일은 수정하지 않습니다.
 
+## 개발 방법
+
+개발의 기준은 [개발지시서](docs/dev/development-spec.md)입니다. 작업은 작업 ID 단위로 진행합니다.
+
+### 1. 작업 시작
+
+1. 개발지시서 5장에서 작업 ID(예: `T-301`)와 완료 기준을 확인합니다.
+2. 결정 필요 항목(D-01~D-08)이 걸려 있으면 6장에서 먼저 정합니다.
+3. 구현 레포를 최신 기준으로 맞춥니다.
+
+```bash
+git submodule update --remote spec
+```
+
+### 2. 구현
+
+- 화면은 21개 라우트 표(개발지시서 4장)를 따릅니다. 웹과 Flutter 모두 같은 경로를 씁니다.
+- 색, 간격, 글자 크기는 토큰만 씁니다. 값을 바꾸려면 `tokens/tokens.json`을 고칩니다.
+- 상태 5종(기본·로딩·빈·오류·권한없음)을 모든 화면에 둡니다.
+- 스키마를 바꾸려면 `supabase/migrations/0002_...sql`처럼 새 번호로 추가합니다.
+
+### 3. 검증
+
+| 구현 레포 | 명령 |
+|---|---|
+| 웹 | `npm run typecheck` → `npm run build` |
+| Flutter | `flutter analyze` → `flutter test` |
+| 스키마 | 개발용 Supabase에 적용 후 RLS 케이스 테스트 (T-702) |
+
+완료 기준은 개발지시서 10장(DoD)에 있습니다.
+
+### 4. 커밋과 push
+
+- 제목: `[작업ID] 변경 내용` (예: `[T-103] 상태 5종 공용 컴포넌트`)
+- 끝에 Co-Authored-By와 Claude-Session 줄을 붙입니다. 자세한 규칙은 개발지시서 9.2절입니다.
+- spec을 고쳤다면 push한 뒤, 구현 레포에서 서브모듈 포인터를 커밋합니다.
+
 ## 현재 상태
 
 | 항목 | 상태 |
@@ -75,6 +112,7 @@ git clone --recurse-submodules <구현 레포 주소>
 | `tokens.json` | 초안 (v0.1.0) |
 | `supabase/migrations/0001_init.sql` | 초안. 실제 프로젝트에 적용 전 |
 | `supabase/seed/seed.sql` | 초안 |
+| `docs/dev/development-spec.md` (개발지시서) | 초판 0.1.0. 결정 항목 D-01~D-08 미정 |
 
 ## 알려진 사항
 
